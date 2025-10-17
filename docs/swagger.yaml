@@ -1,0 +1,232 @@
+basePath: /api/v1
+definitions:
+  entities.User:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  handlers.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      name:
+        maxLength: 100
+        minLength: 2
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
+  handlers.UpdateUserRequest:
+    properties:
+      email:
+        type: string
+      name:
+        maxLength: 100
+        minLength: 2
+        type: string
+      password:
+        minLength: 6
+        type: string
+    required:
+    - email
+    - name
+    type: object
+  utils.BaseErrorResponse:
+    properties:
+      code:
+        type: string
+      errors: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: Api for go temfy
+  title: Go Temfy API
+  version: "1.0"
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get a paginated list of all users
+      parameters:
+      - default: 10
+        description: Number of users per page
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset for pagination
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Users retrieved successfully
+          schema:
+            items:
+              $ref: '#/definitions/entities.User'
+            type: array
+        "500":
+          description: Failed to get users
+          schema:
+            $ref: '#/definitions/utils.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      parameters:
+      - description: User creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            $ref: '#/definitions/entities.User'
+        "400":
+          description: Invalid request body or validation failed
+          schema:
+            $ref: '#/definitions/utils.BaseErrorResponse'
+        "409":
+          description: User already exists
+          schema:
+            $ref: '#/definitions/utils.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new user
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid user ID
+          schema:
+            $ref: '#/definitions/utils.BaseErrorResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/utils.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Delete a user
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: Get a specific user by their ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User retrieved successfully
+          schema:
+            $ref: '#/definitions/entities.User'
+        "400":
+          description: Invalid user ID
+          schema:
+            $ref: '#/definitions/utils.BaseErrorResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/utils.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get a user by ID
+      tags:
+      - users
+    put:
+      consumes:
+      - application/json
+      description: Update an existing user by ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: User update request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User updated successfully
+          schema:
+            $ref: '#/definitions/entities.User'
+        "400":
+          description: Invalid user ID or request body
+          schema:
+            $ref: '#/definitions/utils.BaseErrorResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/utils.BaseErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Update a user
+      tags:
+      - users
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
