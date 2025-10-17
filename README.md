@@ -2,6 +2,29 @@
 
 Go temfy - Go boilerplate สำหรับพัฒนา API ตามหลักการ Clean Architecture ด้วย Go fiber, swagger, gorm, viper, mockery, air, docker, docker compose
 
+## การเริ่มต้นใช้งาน
+
+### 1. Clone โปรเจค
+```bash
+git clone <repository-url>
+cd go-temfy
+```
+
+### 2. เปลี่ยนชื่อ Module (ถ้าต้องการ)
+```bash
+# เปลี่ยนชื่อ module เป็นชื่อของคุณ
+go mod edit -module github.com/yourusername/yourproject
+
+# ค้นหาและแทนที่ import path ทั้งหมดในโปรเจค (Linux/Mac)
+find . -type f -name '*.go' -exec sed -i '' 's|github.com/anthoz/go-temfy|github.com/yourusername/yourproject|g' {} +
+
+# หรือใช้คำสั่งนี้สำหรับ Linux
+find . -type f -name '*.go' -exec sed -i 's|github.com/anthoz/go-temfy|github.com/yourusername/yourproject|g' {} +
+
+# ดาวน์โหลด dependencies ใหม่
+go mod tidy
+```
+
 ## เทคโนโลยีที่ใช้
 
 ### Backend Framework & Libraries
@@ -49,13 +72,7 @@ go-temfy/
 - MySQL 8.0
 - Redis 7
 
-### 1. Clone โปรเจค
-```bash
-git clone <repository-url>
-cd go-temfy
-```
-
-### 2. ตั้งค่า Environment Variables
+### 1. ตั้งค่า Environment Variables
 ```bash
 cp .env.example .env
 ```
@@ -76,7 +93,7 @@ REDIS_DB=0
 SERVER_PORT=3000
 ```
 
-### 3. เริ่มต้นใช้งานด้วย Docker
+### 2. เริ่มต้นใช้งานด้วย Docker
 ```bash
 # เริ่ม MySQL และ Redis
 docker-compose up -d
@@ -85,7 +102,7 @@ docker-compose up -d
 go run cmd/server/main.go
 ```
 
-### 4. หรือใช้ Makefile
+### 3. หรือใช้ Makefile
 ```bash
 # Build และรัน
 make run
