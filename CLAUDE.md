@@ -1,11 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
-## Project Overview
-
-This is a Go Fiber REST API following Clean Architecture principles with MySQL and Redis integration. The application provides a user management system with full CRUD operations.
-
 ## Essential Commands
 
 ### Development
@@ -186,7 +178,7 @@ SERVER_PORT=3000
 - Use `utils.ErrorResponse()` and `utils.SuccessResponse()` for consistency
 
 ### Testing
-Currently no test files exist. When adding tests:
+When adding tests:
 - Unit tests for services (business logic)
 - Integration tests for repositories (database layer)
 - HTTP tests for handlers (API layer)
