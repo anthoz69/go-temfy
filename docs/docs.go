@@ -55,14 +55,14 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/entities.User"
+                                "$ref": "#/definitions/github_com_anthoz69_go-temfy_internal_domain_entities.User"
                             }
                         }
                     },
                     "500": {
                         "description": "Failed to get users",
                         "schema": {
-                            "$ref": "#/definitions/utils.BaseErrorResponse"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse"
                         }
                     }
                 }
@@ -91,7 +91,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handlers.CreateUserRequest"
+                            "$ref": "#/definitions/internal_handlers.CreateUserRequest"
                         }
                     }
                 ],
@@ -99,19 +99,19 @@ const docTemplate = `{
                     "201": {
                         "description": "User created successfully",
                         "schema": {
-                            "$ref": "#/definitions/entities.User"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_internal_domain_entities.User"
                         }
                     },
                     "400": {
                         "description": "Invalid request body or validation failed",
                         "schema": {
-                            "$ref": "#/definitions/utils.BaseErrorResponse"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse"
                         }
                     },
                     "409": {
                         "description": "User already exists",
                         "schema": {
-                            "$ref": "#/definitions/utils.BaseErrorResponse"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse"
                         }
                     }
                 }
@@ -148,19 +148,19 @@ const docTemplate = `{
                     "200": {
                         "description": "User retrieved successfully",
                         "schema": {
-                            "$ref": "#/definitions/entities.User"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_internal_domain_entities.User"
                         }
                     },
                     "400": {
                         "description": "Invalid user ID",
                         "schema": {
-                            "$ref": "#/definitions/utils.BaseErrorResponse"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse"
                         }
                     },
                     "404": {
                         "description": "User not found",
                         "schema": {
-                            "$ref": "#/definitions/utils.BaseErrorResponse"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse"
                         }
                     }
                 }
@@ -196,7 +196,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handlers.UpdateUserRequest"
+                            "$ref": "#/definitions/internal_handlers.UpdateUserRequest"
                         }
                     }
                 ],
@@ -204,19 +204,19 @@ const docTemplate = `{
                     "200": {
                         "description": "User updated successfully",
                         "schema": {
-                            "$ref": "#/definitions/entities.User"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_internal_domain_entities.User"
                         }
                     },
                     "400": {
                         "description": "Invalid user ID or request body",
                         "schema": {
-                            "$ref": "#/definitions/utils.BaseErrorResponse"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse"
                         }
                     },
                     "404": {
                         "description": "User not found",
                         "schema": {
-                            "$ref": "#/definitions/utils.BaseErrorResponse"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse"
                         }
                     }
                 }
@@ -258,13 +258,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Invalid user ID",
                         "schema": {
-                            "$ref": "#/definitions/utils.BaseErrorResponse"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse"
                         }
                     },
                     "404": {
                         "description": "User not found",
                         "schema": {
-                            "$ref": "#/definitions/utils.BaseErrorResponse"
+                            "$ref": "#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse"
                         }
                     }
                 }
@@ -272,7 +272,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "entities.User": {
+        "github_com_anthoz69_go-temfy_internal_domain_entities.User": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -292,7 +292,22 @@ const docTemplate = `{
                 }
             }
         },
-        "handlers.CreateUserRequest": {
+        "github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "errors": {},
+                "message": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "internal_handlers.CreateUserRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -314,7 +329,7 @@ const docTemplate = `{
                 }
             }
         },
-        "handlers.UpdateUserRequest": {
+        "internal_handlers.UpdateUserRequest": {
             "type": "object",
             "required": [
                 "email",
@@ -332,21 +347,6 @@ const docTemplate = `{
                 "password": {
                     "type": "string",
                     "minLength": 6
-                }
-            }
-        },
-        "utils.BaseErrorResponse": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "errors": {},
-                "message": {
-                    "type": "string"
-                },
-                "success": {
-                    "type": "boolean"
                 }
             }
         }

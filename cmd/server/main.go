@@ -38,7 +38,7 @@ func main() {
 	cfg := config.Load()
 
 	// Connect to database
-	if err := database.Connect(cfg); err != nil {
+	if err := database.ConnectMysql(cfg); err != nil {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
@@ -49,6 +49,7 @@ func main() {
 
 	// Create Fiber app
 	app := fiber.New(fiber.Config{
+		ReadBufferSize: 16 * 1024,
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
 			code := fiber.StatusInternalServerError
 			if e, ok := err.(*fiber.Error); ok {
@@ -145,7 +146,9 @@ func main() {
 }
 
 func registerRoute(app *fiber.App, cfg *config.Config) {
-	userRepo := repositories.NewUserRepository(database.GetDB())
+	db := database.GetDB()
+
+	userRepo := repositories.NewUserRepository(db)
 	userService := services.NewUserService(userRepo)
 	userHandler := handlers.NewUserHandler(userService)
 

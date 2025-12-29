@@ -1,6 +1,6 @@
 basePath: /api/v1
 definitions:
-  entities.User:
+  github_com_anthoz69_go-temfy_internal_domain_entities.User:
     properties:
       created_at:
         type: string
@@ -13,7 +13,17 @@ definitions:
       updated_at:
         type: string
     type: object
-  handlers.CreateUserRequest:
+  github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse:
+    properties:
+      code:
+        type: string
+      errors: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  internal_handlers.CreateUserRequest:
     properties:
       email:
         type: string
@@ -29,7 +39,7 @@ definitions:
     - name
     - password
     type: object
-  handlers.UpdateUserRequest:
+  internal_handlers.UpdateUserRequest:
     properties:
       email:
         type: string
@@ -43,16 +53,6 @@ definitions:
     required:
     - email
     - name
-    type: object
-  utils.BaseErrorResponse:
-    properties:
-      code:
-        type: string
-      errors: {}
-      message:
-        type: string
-      success:
-        type: boolean
     type: object
 host: localhost:3000
 info:
@@ -84,12 +84,12 @@ paths:
           description: Users retrieved successfully
           schema:
             items:
-              $ref: '#/definitions/entities.User'
+              $ref: '#/definitions/github_com_anthoz69_go-temfy_internal_domain_entities.User'
             type: array
         "500":
           description: Failed to get users
           schema:
-            $ref: '#/definitions/utils.BaseErrorResponse'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse'
       security:
       - ApiKeyAuth: []
       summary: Get all users
@@ -105,22 +105,22 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/handlers.CreateUserRequest'
+          $ref: '#/definitions/internal_handlers.CreateUserRequest'
       produces:
       - application/json
       responses:
         "201":
           description: User created successfully
           schema:
-            $ref: '#/definitions/entities.User'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_internal_domain_entities.User'
         "400":
           description: Invalid request body or validation failed
           schema:
-            $ref: '#/definitions/utils.BaseErrorResponse'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse'
         "409":
           description: User already exists
           schema:
-            $ref: '#/definitions/utils.BaseErrorResponse'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse'
       security:
       - ApiKeyAuth: []
       summary: Create a new user
@@ -148,11 +148,11 @@ paths:
         "400":
           description: Invalid user ID
           schema:
-            $ref: '#/definitions/utils.BaseErrorResponse'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse'
         "404":
           description: User not found
           schema:
-            $ref: '#/definitions/utils.BaseErrorResponse'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse'
       security:
       - ApiKeyAuth: []
       summary: Delete a user
@@ -174,15 +174,15 @@ paths:
         "200":
           description: User retrieved successfully
           schema:
-            $ref: '#/definitions/entities.User'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_internal_domain_entities.User'
         "400":
           description: Invalid user ID
           schema:
-            $ref: '#/definitions/utils.BaseErrorResponse'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse'
         "404":
           description: User not found
           schema:
-            $ref: '#/definitions/utils.BaseErrorResponse'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse'
       security:
       - ApiKeyAuth: []
       summary: Get a user by ID
@@ -203,22 +203,22 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/handlers.UpdateUserRequest'
+          $ref: '#/definitions/internal_handlers.UpdateUserRequest'
       produces:
       - application/json
       responses:
         "200":
           description: User updated successfully
           schema:
-            $ref: '#/definitions/entities.User'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_internal_domain_entities.User'
         "400":
           description: Invalid user ID or request body
           schema:
-            $ref: '#/definitions/utils.BaseErrorResponse'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse'
         "404":
           description: User not found
           schema:
-            $ref: '#/definitions/utils.BaseErrorResponse'
+            $ref: '#/definitions/github_com_anthoz69_go-temfy_pkg_utils.BaseErrorResponse'
       security:
       - ApiKeyAuth: []
       summary: Update a user

@@ -47,7 +47,7 @@ clean:
 
 swagger:
 	@echo "Generating swagger documentation..."
-	@swag init -g cmd/server/main.go
+	@swag init -g cmd/server/main.go --parseDependency --parseInternal
 	@echo "Swagger documentation generated successfully"
 
 # Help
